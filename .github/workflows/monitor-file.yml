@@ -1,0 +1,24 @@
+name: Monitor File Changes
+
+on:
+  push:
+    paths:
+      - "contract/Test.sol"
+
+jobs:
+  check-file-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run custom script
+        run: |
+          echo "The file has changed!"
+          cat contract/Test.sol 
+
+          # Hit the backend URL
+          curl -X POST https://test-backend-5qji.onrender.com/test \
+               -H "Content-Type: application/json" \
+               -d '{"file": "contract/Test.sol", "status": "changed"}'
