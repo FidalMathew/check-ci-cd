@@ -21,4 +21,4 @@ jobs:
           # Hit the backend URL
           curl -X POST https://test-backend-5qji.onrender.com/test \
                -H "Content-Type: application/json" \
-               -d '{"file": "contract/Test.sol", "status": "changed"}'
+               -d '{"path": "contract/Test.sol"}'
