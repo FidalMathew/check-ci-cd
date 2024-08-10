@@ -3,7 +3,7 @@ name: Monitor File Changes
 on:
   push:
     paths:
-      - "contract/*.sol" # Adjust this pattern to monitor multiple files
+      - "contract/Test.sol"
 
 jobs:
   check-file-changes:
@@ -13,34 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: List changed files
-        id: changed_files
-        run: |
-          echo "Checking for changed files..."
-          # Get the list of changed .sol files in the 'contract/' directory
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'contract/.*\.sol')
-
-          # Check if there are any changed files
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "No relevant files have changed."
-            exit 0
-          fi
-
-          # Convert the list of files into a JSON array
-          FILES_JSON=$(echo $CHANGED_FILES | jq -R -s 'split("\n") | map(select(. != ""))')
-          echo "::set-output name=files_json::$FILES_JSON"
-
       - name: Run custom script
         run: |
-          echo "The following files have changed:"
-          echo "${{ steps.changed_files.outputs.files_json }}"
+          echo "The file has changed!"
+          cat contract/Test.sol 
 
-          # Hit the backend URL with the list of changed files
-          curl -X POST https://test-backend-5qji.onrender.com/test \
+          # Hit the backend URL
+          curl -X POST https://my-express-app-f7i6.onrender.com/create-contract \
                -H "Content-Type: application/json" \
-               -d '{"files": ${{ steps.changed_files.outputs.files_json }}}'
-
-        # Ensure jq is installed (necessary for JSON processing)
-        shell: bash
-        env:
-          PATH: /usr/local/bin:$PATH
+               -d '{"path": "contract/Test.sol"}'
