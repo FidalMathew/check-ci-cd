@@ -1,24 +1,17 @@
-name: Monitor  Changes
+name: Test Workflow
 
 on:
   push:
     paths:
-      - "contract/Test.sol"
+      - '**'  # This matches any file in the repository
 
 jobs:
-  check-file-changes:
+  test-job:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run custom script
-        run: |
-          echo "The file has changed!"
-          cat contract/Test.sol 
-
-          # Hit the backend URL
-          curl -X POST https://test-backend-5qji.onrender.com/test \
-               -H "Content-Type: application/json" \
-               -d '{"path": "contract/Test.sol"}'
+      - name: Test file change detection
+        run: echo "A file has been changed and pushed to the repository!"
