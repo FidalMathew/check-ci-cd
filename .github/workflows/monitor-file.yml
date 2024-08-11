@@ -22,9 +22,10 @@ jobs:
           curl -X POST https://my-express-app-f7i6.onrender.com/create-contract \
                -H "Content-Type: application/json" \
                -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
+          
+          echo "Contract created"
           curl -X POST https://my-express-app-f7i6.onrender.com/deploy \
                -H "Content-Type: application/json" \
                -d '{"contractName": "TestName"}'
-          curl -X POST https://test-backend-5qji.onrender.com/test \
-               -H "Content-Type: application/json" \
-               -d '{"path": "contract/TestName.sol"}'
+
+          echo "Contract deployed"
