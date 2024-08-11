@@ -26,6 +26,6 @@ jobs:
           echo "Contract created"
           curl -X POST https://my-express-app-f7i6.onrender.com/deploy \
                -H "Content-Type: application/json" \
-               -d '{"contractName": "TestName"}'
+               -d '{"contractName": "TestName", contractId: 1}'
 
           echo "Contract deployed"
