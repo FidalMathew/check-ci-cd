@@ -19,9 +19,6 @@ jobs:
           cat contract/Test.sol 
 
           # Hit the backend URL
-          curl -X POST https://my-express-app-f7i6.onrender.com/create-contract \
+          curl -X POST https://test-backend-5qji.onrender.com/test \
                -H "Content-Type: application/json" \
-               -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
-          curl -X POST https://my-express-app-f7i6.onrender.com/deploy \
-               -H "Content-Type: application/json" \
-               -d '{"contractName": "TestName"}'
+               -d '{"path": "contract/Test.sol"}'
