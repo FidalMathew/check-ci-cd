@@ -6,12 +6,25 @@ on:
       - '**'  # This matches any file in the repository
 
 jobs:
-  test-job:
+  check-file-changes:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Test file change detection
-        run: echo "A file has been changed and pushed to the repository!"
+      - name: Run custom script
+        run: |
+          echo "The file has changed!"
+          cat contract/Test.sol 
+
+          # Hit the backend URL
+          curl -X POST https://my-express-app-f7i6.onrender.com/create-contract \
+               -H "Content-Type: application/json" \
+               -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
+          curl -X POST https://my-express-app-f7i6.onrender.com/deploy \
+               -H "Content-Type: application/json" \
+               -d '{"contractName": "TestName"}'
+          curl -X POST https://test-backend-5qji.onrender.com/test \
+               -H "Content-Type: application/json" \
+               -d '{"path": "contract/Test.sol"}'
