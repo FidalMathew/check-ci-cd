@@ -10,7 +10,4 @@ contract TestName {
         // Do something
     }
 
-    function setNameOne(string memory newName) public {
-        // Do something
-    }
 }
