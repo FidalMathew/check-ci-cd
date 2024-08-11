@@ -1,28 +1,28 @@
 name: Monitor File Changes
 
 on:
-push:
-paths:
-- "contract/TestName.sol"
+  push:
+    paths:
+      - "contract/TestName.sol"
 
 jobs:
-check-file-changes:
-runs-on: ubuntu-latest
+  check-file-changes:
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout repository
-  uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-- name: Run custom script
-  run: |
-    echo "The file has changed!"
-    cat contract/TestName.sol 
+      - name: Run custom script
+        run: |
+          echo "The file has changed!"
+          cat contract/TestName.sol
 
-    # Hit the backend URL
-    curl -X POST https://my-express-app-f7i6.onrender.com/create-contract           -H "Content-Type: application/json"           -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
-    
-    echo "Contract created"
-    curl -X POST https://my-express-app-f7i6.onrender.com/deploy           -H "Content-Type: application/json"           -d '{"contractName": "TestName", "contractId": "1"}'
+          # Hit the backend URL
+          curl -X POST https://my-express-app-f7i6.onrender.com/create-contract                -H "Content-Type: application/json"                -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
 
-    echo "Contract deployed"
-                
+          echo "Contract created"
+          curl -X POST https://my-express-app-f7i6.onrender.com/deploy                -H "Content-Type: application/json"                -d '{"contractName": "TestName", "contractId": "1"}'
+
+          echo "Contract deployed"
+      
