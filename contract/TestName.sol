@@ -1,23 +1,23 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 contract TestName {
+    mapping(address => uint256) public balances;
 
-    // State variable to store the name
-    string public name;
-
-    // Function to return the input address (this function doesn't interact with the state)
-    function getName(address _name) public pure returns (address) {
-        return _name;
+    // Deposit Ether into the contract
+    function deposit() public payable {
+        balances[msg.sender] += msg.value;
     }
 
-    // Function to set a new name
-    function setName(string memory newName) public {
-        name = newName; // Store the new name in the state variable
-    }
+    // Withdraw all your Ether
+    function withdraw() public {
+        uint256 amount = balances[msg.sender];
+        
+        // Send Ether to the caller (reentrancy vulnerability here)
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Transfer failed.");
 
-    // Function to retrieve the current name
-    function retrieveName() public view returns (string memory) {
-        return name; // Return the stored name
+        // Update the balance after sending Ether
+        balances[msg.sender] = 0;
     }
 }
