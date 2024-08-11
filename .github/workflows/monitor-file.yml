@@ -16,7 +16,7 @@ jobs:
       - name: Run custom script
         run: |
           echo "The file has changed!"
-          cat contract/Test.sol 
+          cat contract/TestName.sol 
 
           # Hit the backend URL
           curl -X POST https://my-express-app-f7i6.onrender.com/create-contract \
