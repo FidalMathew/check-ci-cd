@@ -1,9 +1,9 @@
-name: Monitor File Changes
+name: Test Workflow
 
 on:
   push:
     paths:
-      - "contract/TestName.sol"
+      - '**'  # This matches any file in the repository
 
 jobs:
   check-file-changes:
@@ -16,13 +16,16 @@ jobs:
       - name: Run custom script
         run: |
           echo "The file has changed!"
-          cat contract/TestName.sol
+          cat contract/TestName.sol 
 
           # Hit the backend URL
-          curl -X POST https://my-express-app-f7i6.onrender.com/create-contract                -H "Content-Type: application/json"                -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
-
+          curl -X POST https://my-express-app-f7i6.onrender.com/create-contract \
+               -H "Content-Type: application/json" \
+               -d '{"repoOwner": "FidalMathew","repoName": "check-ci-cd","branch": "main","filePath": "contract/TestName.sol","fileName": "TestName"}'
+          
           echo "Contract created"
-          curl -X POST https://my-express-app-f7i6.onrender.com/deploy                -H "Content-Type: application/json"                -d '{"contractName": "TestName", "contractId": "1"}'
+          curl -X POST https://my-express-app-f7i6.onrender.com/deploy \
+               -H "Content-Type: application/json" \
+               -d '{"contractName": "TestName"}'
 
           echo "Contract deployed"
-      
