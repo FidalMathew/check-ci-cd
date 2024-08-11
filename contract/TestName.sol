@@ -9,8 +9,4 @@ contract Test {
     function setName(string memory newName) public {
         // Do something
     }
-
-    function anotherFunction(uint256 value) private pure returns (uint256) {
-        return value * 2;
-    }
 }
